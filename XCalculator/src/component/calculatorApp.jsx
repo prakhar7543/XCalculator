@@ -85,34 +85,56 @@ import React, { useState } from "react";
 import "./calculatorApp.css";
 
 export default function Calculator() {
-  const [inputValue, setInputValue] = useState("");  // stores the full expression
-  const [result, setResult] = useState("");          // stores the result
+  const [inputValue, setInputValue] = useState("");
+  const [result, setResult] = useState("");
+
+  function isValidExpression(expression) {
+  // If nothing is typed, it's not valid
+  if (expression === "") {
+    return false;
+  }
+
+  // If the last character is an operator, it's incomplete (like "2+")
+  const lastChar = expression[expression.length - 1];
+  const operators = ["+", "-", "*", "/"];
+
+  if (operators.includes(lastChar)) {
+    return false;
+  }
+
+  // Otherwise, it's a valid expression
+  return true;
+}
+
 
   const handleClick = (e) => {
     const buttonValue = e.target.textContent;
 
     if (buttonValue === "=") {
+      // 🛑 Check before evaluating
+      if (!isValidExpression(inputValue)) {
+        setResult("Error");
+        return;
+      }
+
       try {
-        // Evaluate expression with eval
         let evalResult = eval(inputValue);
 
-        // Handle divide by 0
-        if (evalResult === Infinity) {
-          setResult("Infinity");
-        } else if (isNaN(evalResult)) {
+        // Handle divide by zero (Infinity or NaN)
+        if (evalResult === Infinity || isNaN(evalResult)) {
           setResult("NaN");
         } else {
           setResult(evalResult);
         }
-      } catch (err) {
+      } catch {
         setResult("Error");
       }
     } else if (buttonValue === "C") {
-      // Clear everything
+      // Reset input and result
       setInputValue("");
       setResult("");
     } else {
-      // Append clicked button to input
+      // Add button value to expression
       setInputValue((prev) => prev + buttonValue);
     }
   };
@@ -122,13 +144,7 @@ export default function Calculator() {
       <h1>React Calculator</h1>
 
       <div className="content">
-        <input
-          type="text"
-          name="inp"
-          id="inp"
-          value={inputValue}
-          readOnly
-        />
+        <input type="text" value={inputValue} readOnly />
       </div>
 
       <div className="display">
@@ -136,7 +152,6 @@ export default function Calculator() {
       </div>
 
       <div className="buttons">
-        {/* Buttons in the correct order */}
         <button className="btn" onClick={handleClick}>7</button>
         <button className="btn" onClick={handleClick}>8</button>
         <button className="btn" onClick={handleClick}>9</button>

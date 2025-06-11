@@ -121,12 +121,14 @@ export default function Calculator() {
         let evalResult = eval(inputValue);
 
         // Handle divide by zero (Infinity or NaN)
-        if (evalResult === Infinity || isNaN(evalResult)) {
+        if (evalResult === Infinity) {
+          setResult("Infinity");
+        } else if (isNaN(evalResult)) {
           setResult("NaN");
         } else {
           setResult(evalResult);
         }
-      } catch {
+      } catch (err) {
         setResult("Error");
       }
     } else if (buttonValue === "C") {

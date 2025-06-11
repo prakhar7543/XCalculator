@@ -1,0 +1,22 @@
+.buttons{
+         width: 500px;
+    flex-wrap: wrap;
+    display: flex;
+    gap: 30px;
+    justify-content: space-evenly;
+}
+
+.btn{
+    
+   width: 80px;
+    height: 80px;
+    background-color: lightgray;
+    color: black;
+    border: 1px solid black;
+    font-size: x-large;
+}
+
+.content input{
+    width: 60%;
+    height: 30px;
+}

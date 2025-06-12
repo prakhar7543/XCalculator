@@ -7,14 +7,14 @@ export default function DummyCalculator() {
 
   let calculate = () => {
     if (inputValue === "") {
-      setResult("error");
+      setResult("Error");
       return;
     }
 
     let tokens = inputValue.match(/(\d+\.?\d*|\+|\-|\*|\/)/g);
 
     if (!tokens) {
-      setResult("error");
+      setResult("Error");
       return;
     }
 
@@ -71,7 +71,7 @@ export default function DummyCalculator() {
       try {
         calculate();
       } catch (error) {
-        setResult("error");
+        setResult("Error");
       }
     } else {
       setInputValue((prev) => prev + buttonValue);
